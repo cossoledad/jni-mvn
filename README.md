@@ -35,7 +35,7 @@
 1. 先构建 Foundation（生成 SWIG Java + JNI so）
 
 ```bash
-cmake -S Foundation -B Foundation/build -DCLOUD_LOGGER_INCLUDE_DIR=$(pwd)/JniMvnLib/CloudLogger/src/main/resources/native/include/resources/native/include
+cmake -S Foundation -B Foundation/build -DCLOUD_LOGGER_INCLUDE_DIR=$(pwd)/JniMvnLib/CloudLogger/src/main/resources/native/include/
 cmake --build Foundation/build -j
 ```
 
