@@ -1,6 +1,6 @@
 package com.example.cloudlogger;
 
-import com.example.foundation.CloudLoggerRegistry;
+import com.example.cloudlogger.bridge.CloudLoggerRegistry;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 
@@ -19,7 +19,7 @@ public class CloudLoggerApplicationContextInitializer
             if (initialized) {
                 return;
             }
-            FoundationNativeLoader.loadFoundationJniLibrary();
+            CloudLoggerNativeLoader.load();
             pinnedLogger = new DefaultCloudLogger();
             CloudLoggerRegistry.registerLogger(pinnedLogger);
             initialized = true;

@@ -10,11 +10,23 @@ find_package(JNI REQUIRED)
 
 set(FOUNDATION_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include")
 set(CLOUD_LOGGER_INCLUDE_DIR "" CACHE PATH "Directory containing cloud_logger_bridge.hpp from cloud-logger Maven artifact")
+set(CLOUD_LOGGER_LIB_DIR "" CACHE PATH "Directory containing libcloudlogger_bridge.so from cloud-logger Maven artifact")
 if(NOT CLOUD_LOGGER_INCLUDE_DIR)
     message(FATAL_ERROR "CLOUD_LOGGER_INCLUDE_DIR is required. Point it to extracted cloud-logger native/include directory.")
 endif()
 if(NOT EXISTS "${CLOUD_LOGGER_INCLUDE_DIR}/cloud_logger_bridge.hpp")
     message(FATAL_ERROR "cloud_logger_bridge.hpp not found under CLOUD_LOGGER_INCLUDE_DIR=${CLOUD_LOGGER_INCLUDE_DIR}")
+endif()
+if(NOT CLOUD_LOGGER_LIB_DIR)
+    message(FATAL_ERROR "CLOUD_LOGGER_LIB_DIR is required. Point it to extracted cloud-logger native/lib directory.")
+endif()
+find_library(CLOUD_LOGGER_BRIDGE_LIB
+    NAMES cloudlogger_bridge
+    PATHS ${CLOUD_LOGGER_LIB_DIR}
+    NO_DEFAULT_PATH
+)
+if(NOT CLOUD_LOGGER_BRIDGE_LIB)
+    message(FATAL_ERROR "libcloudlogger_bridge.so not found under CLOUD_LOGGER_LIB_DIR=${CLOUD_LOGGER_LIB_DIR}")
 endif()
 set(SWIG_OUT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/generated/java")
 file(MAKE_DIRECTORY "${SWIG_OUT_DIR}")
@@ -24,8 +36,6 @@ set(CMAKE_SWIG_OUTDIR ${SWIG_OUT_DIR})
 set(CMAKE_SWIG_FLAGS
     -package com.example.foundation
     -I${FOUNDATION_INCLUDE_DIR}
-    -I${CLOUD_LOGGER_INCLUDE_DIR}
-    -directors
 )
 
 swig_add_library(foundation_jni
@@ -36,7 +46,7 @@ swig_add_library(foundation_jni
       ${CMAKE_CURRENT_SOURCE_DIR}/src/foundation_math.cpp
 )
 
-swig_link_libraries(foundation_jni ${JNI_LIBRARIES})
+swig_link_libraries(foundation_jni ${JNI_LIBRARIES} ${CLOUD_LOGGER_BRIDGE_LIB})
 
 target_include_directories(${SWIG_MODULE_foundation_jni_REAL_NAME}
     PRIVATE

@@ -1,6 +1,6 @@
 package com.example.cloudlogger;
 
-import com.example.foundation.CloudLogger;
+import com.example.cloudlogger.bridge.CloudLogger;
 
 import java.time.Instant;
 

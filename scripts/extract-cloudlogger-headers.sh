@@ -20,7 +20,11 @@ rm -rf "${OUT_DIR}/native"
 
 (
   cd "${OUT_DIR}"
-  jar xf "${JAR_PATH}" native/include/cloud_logger_bridge.hpp
+  jar xf "${JAR_PATH}" \
+    native/include/cloud_logger_bridge.hpp \
+    native/lib/libcloudlogger_bridge.so \
+    native/lib/libcloudlogger_jni.so
 )
 
-echo "Extracted headers to: ${OUT_DIR}/native/include"
+echo "Extracted include to: ${OUT_DIR}/native/include"
+echo "Extracted libs to: ${OUT_DIR}/native/lib"

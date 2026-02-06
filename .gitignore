@@ -14,6 +14,7 @@ Thumbs.db
 # CMake / native build
 Foundation/build/
 Foundation/.deps/
+JniMvnLib/CloudLogger/native/build/
 CMakeCache.txt
 CMakeFiles/
 cmake_install.cmake
@@ -22,6 +23,10 @@ compile_commands.json
 
 # SWIG generated sources
 Foundation/generated/java/
+JniMvnLib/CloudLogger/generated/java/
+
+# Native artifacts packaged into resources
+JniMvnLib/CloudLogger/src/main/resources/native/lib/
 
 # Logs / temp
 *.log
